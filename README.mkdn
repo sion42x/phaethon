@@ -1,10 +1,40 @@
-# Hubris
+# Phaethon
 
-![dist](https://github.com/oxidecomputer/hubris/actions/workflows/dist.yml/badge.svg)
+A homelab fork of [Hubris](https://github.com/oxidecomputer/hubris) that
+turns an STM32 [Nucleo-H753ZI](https://www.st.com/en/evaluation-tools/nucleo-h753zi.html)
+into a service processor for a Linux host, connected over serial UART
+([IPCC / RFD 316](https://rfd.shared.oxide.computer/rfd/0316)) and Ethernet
+([MGS](https://github.com/oxidecomputer/management-gateway-service)).
+
+The host pushes sensor telemetry, reports panics and boot failures, and
+queries SP identity and inventory, just like a real
+[Oxide Sled](https://docs.oxide.computer/), but with a $25 dev board
+and a homelab NAS.
+
+See [host-ipcc-comms](https://github.com/sion42x/host-ipcc-comms) for the
+companion host-side daemon.
+
+## What's different from upstream Hubris
+
+- **Nucleo BSP for `host-sp-comms`**: USART2 pin config, STM32H7 inventory,
+  115200 baud without flow control
+- **`SensorData` key**: new [`Key::SensorData`](https://github.com/oxidecomputer/hubris/tree/master/lib/host-sp-messages)
+  variant for host-pushed thermal telemetry via `KeySet`
+- **Sensor API integration**: injected readings are posted to the
+  [sensor task](https://github.com/oxidecomputer/hubris/tree/master/task/sensor),
+  visible over the network via
+  [`humility sensors`](https://github.com/oxidecomputer/humility)
+- **`packrat` stubs**: `get_host_startup_options` / `set_host_startup_options`
+  return `Ok(empty)` instead of errors on non-Gimlet boards
+
+---
+
+# Hubris
 
 Hubris is a microcontroller operating environment designed for deeply-embedded
 systems with reliability requirements. Its design was initially proposed in
-RFD41, but has evolved considerably since then.
+[RFD 41](https://rfd.shared.oxide.computer/rfd/0041), but has evolved
+considerably since then.
 
 # Learning
 
