@@ -223,6 +223,14 @@ pub trait InputVoltageSensor<T: core::convert::Into<drv_i2c_api::ResponseCode>>
     fn read_vin(&self) -> Result<userlib::units::Volts, T>;
 }
 
+pub trait PressureSensor<T: core::convert::Into<drv_i2c_api::ResponseCode>> {
+    fn read_pressure(&self) -> Result<userlib::units::Hectopascals, T>;
+}
+
+pub trait HumiditySensor<T: core::convert::Into<drv_i2c_api::ResponseCode>> {
+    fn read_humidity(&self) -> Result<userlib::units::RelativeHumidity, T>;
+}
+
 pub trait Validate<T: core::convert::Into<drv_i2c_api::ResponseCode>> {
     //
     // We have a default implementation that returns false to allow for
@@ -238,9 +246,11 @@ pub trait Validate<T: core::convert::Into<drv_i2c_api::ResponseCode>> {
 pub mod adm127x;
 pub mod adt7420;
 pub mod at24csw080;
+pub mod bme280;
 pub mod bmr491;
 pub mod ds2482;
 pub mod emc2305;
+pub mod ina260;
 pub mod isl68224;
 pub mod lm5066;
 pub mod lm5066i;

@@ -5933,6 +5933,36 @@ dependencies = [
 ]
 
 [[package]]
+name = "task-nas-power-ctrl"
+version = "0.1.0"
+dependencies = [
+ "build-util",
+ "drv-stm32xx-sys-api",
+ "idol",
+ "idol-runtime",
+ "num-traits",
+ "ringbuf",
+ "task-nas-power-ctrl-api",
+ "userlib",
+ "zerocopy 0.8.27",
+ "zerocopy-derive 0.8.27",
+]
+
+[[package]]
+name = "task-nas-power-ctrl-api"
+version = "0.1.0"
+dependencies = [
+ "counters",
+ "derive-idol-err",
+ "idol",
+ "idol-runtime",
+ "num-traits",
+ "userlib",
+ "zerocopy 0.8.27",
+ "zerocopy-derive 0.8.27",
+]
+
+[[package]]
 name = "task-net"
 version = "0.1.0"
 dependencies = [
@@ -6001,6 +6031,21 @@ dependencies = [
  "userlib",
  "zerocopy 0.8.27",
  "zerocopy-derive 0.8.27",
+]
+
+[[package]]
+name = "task-nucleo-sensor-poll"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "build-i2c",
+ "build-util",
+ "drv-i2c-api",
+ "drv-i2c-devices",
+ "idol",
+ "ringbuf",
+ "task-sensor-api",
+ "userlib",
 ]
 
 [[package]]

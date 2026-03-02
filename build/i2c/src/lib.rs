@@ -219,6 +219,12 @@ struct I2cSensors {
     #[serde(default)]
     speed: usize,
 
+    #[serde(default)]
+    pressure: usize,
+
+    #[serde(default)]
+    humidity: usize,
+
     names: Option<Vec<String>>,
 }
 
@@ -245,6 +251,8 @@ impl I2cSensors {
             input_current,
             input_voltage,
             speed,
+            pressure,
+            humidity,
             names: _,
         } = self;
         temperature == other.temperature
@@ -254,6 +262,8 @@ impl I2cSensors {
             && input_current == other.input_current
             && input_voltage == other.input_voltage
             && speed == other.speed
+            && pressure == other.pressure
+            && humidity == other.humidity
     }
 }
 
@@ -341,6 +351,14 @@ impl I2cSensorsDescription {
 
                 for i in 0..s.speed {
                     desc.add_sensor(Sensor::Speed, d, i, d_index);
+                }
+
+                for i in 0..s.pressure {
+                    desc.add_sensor(Sensor::Pressure, d, i, d_index);
+                }
+
+                for i in 0..s.humidity {
+                    desc.add_sensor(Sensor::Humidity, d, i, d_index);
                 }
             }
         }
@@ -452,6 +470,8 @@ pub enum Sensor {
     InputCurrent,
     InputVoltage,
     Speed,
+    Pressure,
+    Humidity,
 }
 
 impl std::fmt::Display for Sensor {
@@ -467,6 +487,8 @@ impl std::fmt::Display for Sensor {
                 Sensor::InputCurrent => "INPUT_CURRENT",
                 Sensor::InputVoltage => "INPUT_VOLTAGE",
                 Sensor::Speed => "SPEED",
+                Sensor::Pressure => "PRESSURE",
+                Sensor::Humidity => "HUMIDITY",
             }
         )
     }
@@ -1476,6 +1498,8 @@ impl ConfigGenerator {
             input_current,
             input_voltage,
             speed,
+            pressure,
+            humidity,
             names: _,
         }) = &d.sensors
         {
@@ -1502,6 +1526,8 @@ impl ConfigGenerator {
             f("input_current", *input_current)?;
             f("input_voltage", *input_voltage)?;
             f("speed", *speed)?;
+            f("pressure", *pressure)?;
+            f("humidity", *humidity)?;
             writeln!(&mut self.output, "        }}")?;
         } else {
             writeln!(
@@ -1547,6 +1573,8 @@ impl ConfigGenerator {
                 Sensor::InputCurrent => "input_current",
                 Sensor::InputVoltage => "input_voltage",
                 Sensor::Speed => "speed",
+                Sensor::Pressure => "pressure",
+                Sensor::Humidity => "humidity",
             };
             if values.len() == 1 {
                 writeln!(

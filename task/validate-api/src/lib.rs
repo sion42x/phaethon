@@ -60,6 +60,8 @@ pub enum Sensor {
     InputCurrent,
     InputVoltage,
     Speed,
+    Pressure,
+    Humidity,
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]

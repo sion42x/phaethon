@@ -1,0 +1,25 @@
+// NAS Power Control API
+
+Interface(
+    name: "NasPowerCtrl",
+    ops: {
+        "power_state": (
+            description: "Read the NAS power state (true = on, false = off)",
+            reply: Result(
+                ok: "bool",
+                err: CLike("NasPowerCtrlError"),
+            ),
+            idempotent: true,
+        ),
+        "power_button_press": (
+            description: "Simulate a power button press by pulsing the MOSFET gate",
+            args: {
+                "duration_ms": "u32",
+            },
+            reply: Result(
+                ok: "()",
+                err: CLike("NasPowerCtrlError"),
+            ),
+        ),
+    },
+)
