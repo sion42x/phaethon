@@ -387,6 +387,9 @@ impl From<MeasurementKindConvert> for MeasurementKind {
             Sensor::InputCurrent => Self::InputCurrent,
             Sensor::InputVoltage => Self::InputVoltage,
             Sensor::Speed => Self::Speed,
+            // gateway-messages MeasurementKind doesn't have these yet;
+            // map to Temperature as a placeholder for MGS reporting.
+            Sensor::Pressure | Sensor::Humidity => Self::Temperature,
         }
     }
 }

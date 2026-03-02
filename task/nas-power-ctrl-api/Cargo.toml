@@ -1,0 +1,28 @@
+[package]
+name = "task-nas-power-ctrl-api"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+num-traits = { workspace = true }
+zerocopy = { workspace = true }
+zerocopy-derive = { workspace = true }
+
+idol-runtime.workspace = true
+
+counters = { path = "../../lib/counters" }
+derive-idol-err = { path = "../../lib/derive-idol-err" }
+userlib = { path = "../../sys/userlib" }
+
+# This section is here to discourage RLS/rust-analyzer from doing test builds,
+# since test builds don't work for cross compilation.
+[lib]
+test = false
+doctest = false
+bench = false
+
+[build-dependencies]
+idol = { workspace = true }
+
+[lints]
+workspace = true

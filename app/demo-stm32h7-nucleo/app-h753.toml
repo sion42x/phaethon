@@ -7,7 +7,7 @@ stacksize = 896
 
 [kernel]
 name = "demo-stm32h7-nucleo"
-requires = {flash = 24736, ram = 5632}
+requires = {flash = 24736, ram = 5760}
 features = ["h753", "dump"]
 
 [caboose]
@@ -20,7 +20,7 @@ name = "task-jefe"
 priority = 0
 start = true
 features = ["dump"]
-stacksize = 2048
+stacksize = 2112
 notifications = ["fault", "timer"]
 extern-regions = [ "sram1", "sram2", "sram3", "sram4" ]
 
@@ -265,6 +265,22 @@ start = true
 task-slots = ["sys", {cpu_seq = "gimlet_seq"}, "hf", "control_plane_agent", "net", "packrat", "sprot", "sensor"]
 notifications = ["jefe-state-change", "usart-irq", "multitimer", "control-plane-agent"]
 
+[tasks.nucleo_sensor_poll]
+name = "task-nucleo-sensor-poll"
+priority = 6
+stacksize = 2048
+start = true
+task-slots = ["i2c_driver", "sensor"]
+notifications = ["timer"]
+
+[tasks.nas_power_ctrl]
+name = "task-nas-power-ctrl"
+priority = 5
+stacksize = 1024
+start = true
+task-slots = ["sys"]
+notifications = ["timer"]
+
 [tasks.idle]
 name = "task-idle"
 priority = 9
@@ -290,6 +306,14 @@ stacksize = 1200
 extern-regions = [ "sram1", "sram2", "sram3", "sram4" ]
 
 [config]
+[[config.i2c.controllers]]
+controller = 1
+
+[config.i2c.controllers.ports.B]
+scl.pin = 8
+sda.pin = 9
+af = 4
+
 [[config.i2c.controllers]]
 controller = 2
 
@@ -399,3 +423,22 @@ address = 0x4a
 description = "Management node temperature (injected)"
 sensors = { temperature = 1 }
 refdes = "MGMT"
+
+# Real I2C sensors on I2C1 bus (PB8/PB9)
+[[config.i2c.devices]]
+device = "bme280"
+name = "env"
+controller = 1
+address = 0x76
+description = "Environmental sensor (temperature, pressure, humidity)"
+sensors = { temperature = 1, pressure = 1, humidity = 1 }
+refdes = "ENV0"
+
+[[config.i2c.devices]]
+device = "ina260"
+name = "nas_power"
+controller = 1
+address = 0x44
+description = "NAS 12V rail power monitor"
+sensors = { current = 1, voltage = 1, power = 1 }
+refdes = "PWR0"

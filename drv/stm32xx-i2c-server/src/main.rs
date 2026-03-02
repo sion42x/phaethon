@@ -327,7 +327,7 @@ fn reset_and_wiggle_if_needed(
                     *gpio_pin,
                     OutputType::OpenDrain,
                     Speed::Low,
-                    Pull::None,
+                    Pull::Up,
                     pin.function,
                 );
             }
@@ -579,7 +579,7 @@ fn configure_port(
                     *gpio_pin,
                     OutputType::OpenDrain,
                     Speed::Low,
-                    Pull::None,
+                    Pull::Up,
                     pin.function,
                 );
             }
@@ -719,7 +719,7 @@ fn configure_pins(
                 *gpio_pin,
                 OutputType::OpenDrain,
                 Speed::Low,
-                Pull::None,
+                Pull::Up,
                 pin.function,
             );
         }

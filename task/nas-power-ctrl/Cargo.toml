@@ -1,0 +1,32 @@
+[package]
+name = "task-nas-power-ctrl"
+description = "NAS power state monitoring and control via GPIO"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+idol-runtime.workspace = true
+num-traits.workspace = true
+zerocopy.workspace = true
+zerocopy-derive.workspace = true
+
+drv-stm32xx-sys-api = { path = "../../drv/stm32xx-sys-api", features = ["family-stm32h7"] }
+ringbuf = { path = "../../lib/ringbuf" }
+task-nas-power-ctrl-api = { path = "../nas-power-ctrl-api" }
+userlib = { path = "../../sys/userlib", features = ["panic-messages"] }
+
+[build-dependencies]
+build-util = { path = "../../build/util" }
+idol.workspace = true
+
+[features]
+no-ipc-counters = ["idol/no-counters"]
+
+[[bin]]
+name = "task-nas-power-ctrl"
+test = false
+doctest = false
+bench = false
+
+[lints]
+workspace = true

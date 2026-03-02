@@ -58,3 +58,11 @@ pub struct Ohms(pub f32);
 /// Watts of power
 #[derive(Copy, Clone, PartialEq, PartialOrd, Debug)]
 pub struct Watts(pub f32);
+
+/// Pressure in hectopascals (hPa), equivalent to millibar
+#[derive(Copy, Clone, PartialEq, PartialOrd, Debug)]
+pub struct Hectopascals(pub f32);
+
+/// Relative humidity as a percentage (0-100)
+#[derive(Copy, Clone, PartialEq, PartialOrd, Debug)]
+pub struct RelativeHumidity(pub f32);
